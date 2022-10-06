@@ -15,12 +15,6 @@ public class MainController {
 
     private final ProductService service;
 
-    @GetMapping("/hello")
-    @ResponseBody
-    public String hello() {
-        return "Hello World!";
-    }
-
     @GetMapping("/products/{id}/info")
     public String info(Model model, @PathVariable Long id) {
         model.addAttribute("productFront", service.getProduct(id));
