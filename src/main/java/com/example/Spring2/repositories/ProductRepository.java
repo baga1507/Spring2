@@ -30,4 +30,12 @@ public class ProductRepository {
     public List<Product> getAll() {
         return productList;
     }
+
+    public void add(Long id, String title, int cost) {
+        productList.add(new Product(id, title, cost));
+    }
+
+    public void delete(Long id) {
+        productList.removeIf(p -> p.getId().equals(id));
+    }
 }
