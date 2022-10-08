@@ -20,4 +20,9 @@ public class ProductService {
     public List<Product> getAllProducts() {
         return productRepository.getAll();
     }
+
+    public void changeCost(Long id, int delta) {
+        Product product = getProduct(id);
+        product.setCost(product.getCost() + delta);
+    }
 }

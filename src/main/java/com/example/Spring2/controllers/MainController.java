@@ -1,5 +1,6 @@
 package com.example.Spring2.controllers;
 
+import com.example.Spring2.dto.Product;
 import com.example.Spring2.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,9 +24,15 @@ public class MainController {
         return "info.html";
     }
 
-    @GetMapping("/products")
-    public String list(Model model) {
-        model.addAttribute("productList", service.getAllProducts());
-        return "list.html";
+    @GetMapping("/products/all")
+    @ResponseBody
+    public List<Product> list() {
+        return service.getAllProducts();
+    }
+
+    @GetMapping("/products/change_cost")
+    @ResponseBody
+    public void changeCost(@RequestParam Long productId, @RequestParam int delta) {
+        service.changeCost(productId, delta);
     }
 }
