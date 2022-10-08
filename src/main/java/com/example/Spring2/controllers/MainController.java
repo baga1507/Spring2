@@ -35,4 +35,10 @@ public class MainController {
     public void changeCost(@RequestParam Long productId, @RequestParam int delta) {
         service.changeCost(productId, delta);
     }
+
+    @GetMapping("/products/{productId}/delete")
+    @ResponseBody
+    public void deleteProduct(@PathVariable Long productId) {
+        service.deleteProduct(productId);
+    }
 }

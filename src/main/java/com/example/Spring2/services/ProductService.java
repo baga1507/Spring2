@@ -25,4 +25,12 @@ public class ProductService {
         Product product = getProduct(id);
         product.setCost(product.getCost() + delta);
     }
+
+    public void addProduct(Long id, String title, int cost) {
+        productRepository.add(id, title, cost);
+    }
+
+    public void deleteProduct(Long id) {
+        productRepository.delete(id);
+    }
 }
