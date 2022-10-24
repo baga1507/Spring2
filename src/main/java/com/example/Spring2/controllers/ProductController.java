@@ -14,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class MainController {
+public class ProductController {
 
     private final ProductService service;
 
@@ -34,6 +34,11 @@ public class MainController {
     @ResponseBody
     public void changeCost(@RequestParam Long productId, @RequestParam int delta) {
         service.changeCost(productId, delta);
+    }
+
+    @GetMapping("/products/add")
+    public void addProduct(@RequestParam Long id, @RequestParam String title, @RequestParam Integer cost) {
+        service.addProduct(id, title, cost);
     }
 
     @GetMapping("/products/{productId}/delete")
