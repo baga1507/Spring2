@@ -1,4 +1,4 @@
-package com.example.Spring2.dto;
+package com.example.Spring2.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +22,5 @@ public class Product {
     private String title;
 
     @Column(name = "cost")
-    private Integer cost;
+    private Integer price;
 }
