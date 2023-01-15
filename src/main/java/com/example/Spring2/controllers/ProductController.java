@@ -1,47 +1,58 @@
 package com.example.Spring2.controllers;
 
-import com.example.Spring2.dto.Product;
+import com.example.Spring2.dto.ProductDto;
 import com.example.Spring2.services.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@Controller
+@RestController
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService service;
 
-    @GetMapping("/products/{id}/info")
+    @GetMapping("/{id}/info")
+    @ResponseBody
     public String info(Model model, @PathVariable Long id) {
         model.addAttribute("productFront", service.getProduct(id));
         return "info.html";
     }
 
-    @GetMapping("/products/all")
-    @ResponseBody
-    public List<Product> list() {
-        return service.getAllProducts();
+    @GetMapping("/{id}")
+    public ProductDto getProduct(@PathVariable Long id) {
+        return service.getProduct(id);
     }
 
-    @GetMapping("/products/change_cost")
-    @ResponseBody
-    public void changeCost(@RequestParam Long productId, @RequestParam int delta) {
-        service.changeCost(productId, delta);
+    @GetMapping
+    public Page<ProductDto> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
+                                        @RequestParam(name = "min_cost", required = false) Integer minPrice,
+                                        @RequestParam(name = "max_cost", required = false) Integer maxPrice,
+                                        @RequestParam(name = "title_part", required = false) String titlePart) {
+        if (page < 1) {
+            page = 1;
+        }
+        return service.find(page, minPrice, maxPrice, titlePart);
     }
 
-    @GetMapping("/products/add")
-    public void addProduct(@RequestParam Long id, @RequestParam String title, @RequestParam Integer cost) {
-        service.addProduct(id, title, cost);
+    @GetMapping("/change_cost")
+    public void changePrice(@RequestParam Long productId, @RequestParam int delta) {
+        service.changePrice(productId, delta);
     }
 
-    @GetMapping("/products/{productId}/delete")
+    @PostMapping
+    public ProductDto addProduct(@RequestBody ProductDto productDto) {
+        return service.addProduct(productDto);
+    }
+
+    @PutMapping
+    public void updateProduct(@RequestBody ProductDto productDto) {
+        service.updateProduct(productDto);
+    }
+
+    @DeleteMapping("/{productId}/delete")
     @ResponseBody
     public void deleteProduct(@PathVariable Long productId) {
         service.deleteProduct(productId);
