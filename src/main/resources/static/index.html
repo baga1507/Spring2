@@ -44,7 +44,7 @@
     </div>
   </nav>
 
-  <form novalidate ng-submit="loadProducts()">
+  <form novalidate ng-submit="loadProducts(1)">
     <div class="form-floating input-group-sm">
       <input type="text" class="form-control" id="filterTitle" placeholder="" ng-model="filter.title_part">
       <label for="filterTitle">Название продукта</label>
@@ -74,10 +74,35 @@
     <tr ng-repeat="p in ProductsPage.content">
       <td>{{p.id}}</td>
       <td>{{p.title}}</td>
-      <td>{{p.price}}</td>
+      <td>{{p.cost}}</td>
+      <td>
+        <button type="button" class="button btn-primary" ng-click="addToCart(p.id)">Добавить в корзину</button>
+      </td>
     </tr>
     </tbody>
   </table>
+
+  <h3>Корзина</h3>
+  <table class="table table-hover">
+    <tr>
+      <td>Название</td>
+      <td>Количество</td>
+      <td>Цена</td>
+    </tr>
+    <tbody>
+    <tr ng-repeat="item in cart.items">
+      <td>{{item.productTitle}}</td>
+      <td>{{item.quantity}}</td>
+      <td>{{item.costPerProduct + ' x ' + item.quantity + ' = ' + item.cost}}</td>
+    </tr>
+    <tr>
+      <td>Итого</td>
+      <td></td>
+      <td>{{cart.totalCost}}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" class="button btn-danger" ng-click="createOrder()">Оформить заказ</button>
 </div>
 
 </body>

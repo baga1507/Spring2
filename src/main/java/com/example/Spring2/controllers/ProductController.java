@@ -28,8 +28,8 @@ public class ProductController {
 
     @GetMapping
     public Page<ProductDto> getAllProducts(@RequestParam(name = "p", defaultValue = "1") Integer page,
-                                        @RequestParam(name = "min_cost", required = false) Integer minPrice,
-                                        @RequestParam(name = "max_cost", required = false) Integer maxPrice,
+                                        @RequestParam(name = "min_price", required = false) Integer minPrice,
+                                        @RequestParam(name = "max_price", required = false) Integer maxPrice,
                                         @RequestParam(name = "title_part", required = false) String titlePart) {
         if (page < 1) {
             page = 1;

@@ -36,11 +36,15 @@ public class ProductService {
             spec = spec.and(ProductSpecification.titleLike(titlePart));
         }
 
-        return productRepository.findAll(spec, PageRequest.of(p - 1, 5)).map(productConverter::entityToDto);
+        return productRepository.findAll(spec, PageRequest.of(p - 1, 10)).map(productConverter::entityToDto);
     }
 
     public ProductDto getProduct(Long id) {
         return productRepository.findById(id).map(productConverter::entityToDto).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " is not found"));
+    }
+
+    public ProductDto getProduct(String title) {
+        return productRepository.findByTitle(title).map(productConverter::entityToDto).orElseThrow(() -> new ResourceNotFoundException("Product with title " + title + " is not found"));
     }
 
     public List<Product> getAllProducts() {
@@ -50,7 +54,7 @@ public class ProductService {
     @Transactional
     public void changePrice(Long id, int delta) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " is not found"));
-        product.setPrice(product.getPrice() + delta);
+        product.setCost(product.getCost() + delta);
     }
 
     public ProductDto addProduct(ProductDto productDto) {
@@ -64,7 +68,7 @@ public class ProductService {
         productValidator.validate(productDto);
         Product product = productRepository.findById(productDto.getId()).orElseThrow(() -> new ResourceNotFoundException("Product with id " + productDto.getId() + " is not found"));
         product.setTitle(productDto.getTitle());
-        product.setPrice(productDto.getPrice());
+        product.setCost(productDto.getCost());
     }
 
     public void deleteProduct(Long id) {

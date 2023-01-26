@@ -1,6 +1,18 @@
 angular.module('app', ['ngStorage']).controller('indexController', function ($scope, $rootScope, $http, $localStorage) {
 
     if ($localStorage.springWebUser) {
+        try {
+            let jwt = $localStorage.springWebUser.token;
+            let payload = JSON.parse(atob(jwt.split('.')[1]));
+            let currentTime = parseInt(new Data().getTime() / 1000);
+            if (currentTime > payload.exp) {
+                clearUser();
+                console.log("Hi");
+            }
+        }
+        catch (e) {
+
+        }
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
     }
 
@@ -11,6 +23,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
             url: contextPath + '/products',
             method: 'GET',
             params: {
+                p: pageIndex,
                 title_part: $scope.filter ? $scope.filter.title_part : null,
                 min_price: $scope.filter ? $scope.filter.min_price : null,
                 max_price: $scope.filter ? $scope.filter.max_price : null
@@ -58,5 +71,23 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         }
     };
 
-    $scope.loadProducts();
+    $scope.loadCart = function () {
+        $http.get(contextPath + '/cart').then(function (response) {
+            $scope.cart = response.data;
+        });
+    }
+
+    $scope.addToCart = function (productId) {
+        $http.get(contextPath + '/cart/add/' + productId).then(function (response) {
+            $scope.loadCart();
+        })
+    }
+
+    $scope.createOrder = function () {
+        $http.post(contextPath + "/orders").then(function (response) {
+            $scope.loadCart();
+        });
+    }
+
+    $scope.loadCart();
 });
