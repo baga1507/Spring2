@@ -16,3 +16,9 @@ spring:
     properties:
       hibertnate:
         dialect: org.hibernate.dialect.PostgreSql
+integrations:
+  cart-service:
+    url: http://localhost:8190/app/
+    connectTimeout: 5000
+    readTimeout: 10000
+    writeTimeout: 5000

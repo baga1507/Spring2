@@ -34,7 +34,7 @@ public class CartController {
         cartService.removeItem(id);
     }
 
-    @DeleteMapping("/clear")
+    @GetMapping("/clear")
     public void clearCart() {
         cartService.clearCart();
     }
