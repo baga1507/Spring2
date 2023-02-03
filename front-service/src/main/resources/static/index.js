@@ -16,7 +16,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.springWebUser.token;
     }
 
-    const contextPath = 'http://localhost:8189/app/api/v1';
+    const contextPath = 'http://localhost:5555/core/api/v1';
 
     $scope.loadProducts = function (pageIndex = 1) {
         $http({
@@ -34,7 +34,7 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.tryToAuth = function () {
-        $http.post('http://localhost:8189/app/auth', $scope.user)
+        $http.post('http://localhost:5555/auth/auth', $scope.user)
             .then(function successCallback(response) {
                 if (response.data.token) {
                     $http.defaults.headers.common.Authorization = 'Bearer ' + response.data.token;
@@ -72,13 +72,13 @@ angular.module('app', ['ngStorage']).controller('indexController', function ($sc
     };
 
     $scope.loadCart = function () {
-        $http.get("http://localhost:8190/app/api/v1/cart").then(function (response) {
+        $http.get("http://localhost:5555/cart/api/v1/cart").then(function (response) {
             $scope.cart = response.data;
         });
     }
 
     $scope.addToCart = function (productId) {
-        $http.get("http://localhost:8190/app/api/v1/cart/add/" + productId).then(function (response) {
+        $http.get("http://localhost:5555/cart/api/v1/cart/add/" + productId).then(function (response) {
             $scope.loadCart();
         })
     }

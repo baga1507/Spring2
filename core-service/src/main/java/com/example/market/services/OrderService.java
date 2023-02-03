@@ -7,7 +7,6 @@ import com.example.market.converters.OrderConverter;
 import com.example.market.converters.ProductConverter;
 import com.example.market.entities.Order;
 import com.example.market.entities.OrderItem;
-import com.example.market.entities.User;
 import com.example.market.integrations.CartServiceIntegration;
 import com.example.market.repositories.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +26,10 @@ public class OrderService {
     private final ProductConverter productConverter;
 
     @Transactional
-    public void createOrder(User user) {
+    public void createOrder(String username) {
         CartDto cart = cartService.getCurrentCart();
         Order order = new Order();
-        order.setUser(user);
+        order.setUsername(username);
         order.setTotalCost(cart.getTotalCost());
         order.setItems(cart.getItems().stream().map(
                 cartItem -> new OrderItem(

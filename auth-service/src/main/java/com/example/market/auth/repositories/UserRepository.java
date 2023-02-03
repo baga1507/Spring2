@@ -1,6 +1,6 @@
-package com.example.market.repositories;
+package com.example.market.auth.repositories;
 
-import com.example.market.entities.User;
+import com.example.market.auth.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

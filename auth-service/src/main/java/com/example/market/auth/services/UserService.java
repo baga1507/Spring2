@@ -1,8 +1,8 @@
-package com.example.market.services;
+package com.example.market.auth.services;
 
-import com.example.market.entities.Role;
-import com.example.market.entities.User;
-import com.example.market.repositories.UserRepository;
+import com.example.market.auth.entities.Role;
+import com.example.market.auth.entities.User;
+import com.example.market.auth.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

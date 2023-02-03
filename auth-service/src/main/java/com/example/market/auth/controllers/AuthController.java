@@ -1,24 +1,22 @@
-package com.example.market.controllers;
+package com.example.market.auth.controllers;
 
 import com.example.api.AppError;
 import com.example.api.JwtRequest;
 import com.example.api.JwtResponse;
-import com.example.market.services.UserService;
-import com.example.market.utils.JwtTokenUtil;
+import com.example.market.auth.services.UserService;
+import com.example.market.auth.utils.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin("*")
 public class AuthController {
     private final UserService userService;
     private final JwtTokenUtil jwtTokenUtil;

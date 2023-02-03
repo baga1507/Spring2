@@ -2,7 +2,6 @@ package com.example.market.converters;
 
 import com.example.api.OrderDto;
 import com.example.market.entities.Order;
-import com.example.market.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +12,11 @@ import java.util.stream.Collectors;
 public class OrderConverter {
 
     private final OrderItemConverter orderItemConverter;
-    private final UserRepository userRepository;
 
     public OrderDto entityToDto(Order order) {
         return new OrderDto(
                 order.getId(),
-                order.getUser().getUsername(),
+                order.getUsername(),
                 order.getItems().stream().map(orderItemConverter::entityToDto).collect(Collectors.toList()),
                 order.getTotalCost()
         );
@@ -27,7 +25,7 @@ public class OrderConverter {
     public Order dtoToEntity(OrderDto orderDto) {
         Order order = new Order();
         order.setId(orderDto.getId());
-        order.setUser(userRepository.findByUsername(orderDto.getUsername()).orElseThrow());
+        order.setUsername(orderDto.getUsername());
         order.setItems(orderDto.getItems().stream().map(item -> orderItemConverter.dtoToEntity(item, order)).collect(Collectors.toList()));
         order.setTotalCost(order.getTotalCost());
         return order;

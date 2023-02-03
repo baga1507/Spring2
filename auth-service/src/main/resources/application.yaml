@@ -1,14 +1,14 @@
 server:
-  port: 8189
+  port: 8188
   servlet:
-    context-path: /market-core
+    context-path: /market-auth
 spring:
   flyway:
     check-location: true
     locations: classpath:db/migration
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost/market
+    url: jdbc:postgresql://localhost/users
     username: postgres
     password: Bb123456789
   jpa:
@@ -16,9 +16,6 @@ spring:
     properties:
       hibertnate:
         dialect: org.hibernate.dialect.PostgreSql
-integrations:
-  cart-service:
-    url: http://localhost:8190/market-carts/
-    connectTimeout: 5000
-    readTimeout: 10000
-    writeTimeout: 5000
+jwt:
+  secret: feiofjdskfafesfefda
+  lifetime: 360000

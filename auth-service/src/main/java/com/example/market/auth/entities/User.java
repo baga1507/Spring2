@@ -1,4 +1,4 @@
-package com.example.market.entities;
+package com.example.market.auth.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
