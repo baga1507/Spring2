@@ -1,0 +1,21 @@
+server:
+  port: 8188
+  servlet:
+    context-path: /market-auth
+spring:
+  flyway:
+    check-location: true
+    locations: classpath:db/migration
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/users
+    username: postgres
+    password: Bb123456789
+  jpa:
+    show-sql: true
+    properties:
+      hibertnate:
+        dialect: org.hibernate.dialect.PostgreSql
+jwt:
+  secret: feiofjdskfafesfefda
+  lifetime: 360000
